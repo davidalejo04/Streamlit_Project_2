@@ -68,6 +68,14 @@ tipos = pd.DataFrame({
 "Valores nulos": results_df2.isnull().sum()
         })
 st.dataframe(tipos)
+
+st.subheader("   Histograma")
+
+plt.figure(figsize=(20,5))
+labels=results_df2['sexo_de_la_victima']
+plt.hist(results_df2['grupo_de_edad_quinquenal'][(results_df2['sexo_de_la_victima']=='Hombre')], bins=10,label="Hombre")
+plt.hist(results_df2['grupo_de_edad_quinquenal'][(results_df2['sexo_de_la_victima']=='Mujer')], bins=10,label="Mujer")
+
 def ask_ai_about_data(df, user_question, api_key):
     client = Groq(api_key=api_key)
 
