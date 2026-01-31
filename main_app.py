@@ -52,63 +52,63 @@ results_dff=results_df['departamento_del_hecho_dane']=='Antioquia'
 results_df2=results_df[results_dff]
 results_df2=pd.DataFrame(results_df2)
  # ==============================
-        # VISTA GENERAL
-        # ==============================
-        st.subheader("🔍 Vista general del dataset")
-        st.write(f"**Filas:** {results_df2.shape[0]} | **Columnas:** {results_df2.shape[1]}")
-        st.dataframe(results_df2.head())
+ # VISTA GENERAL
+# ==============================
+st.subheader("🔍 Vista general del dataset")
+st.write(f"**Filas:** {results_df2.shape[0]} | **Columnas:** {results_df2.shape[1]}")
+st.dataframe(results_df2.head())
 
-        # ==============================
-        # TIPOS DE DATOS
-        # ==============================
-        st.subheader("🧬 Tipos de datos")
-        tipos = pd.DataFrame({
-            "Columna": results_df2.columns,
-            "Tipo de dato": results_df2.dtypes.astype(str),
-            "Valores nulos": results_df2.isnull().sum()
+# ==============================
+# TIPOS DE DATOS
+# ==============================
+st.subheader("🧬 Tipos de datos")
+tipos = pd.DataFrame({
+"Columna": results_df2.columns,
+"Tipo de dato": results_df2.dtypes.astype(str),
+"Valores nulos": results_df2.isnull().sum()
         })
-        st.dataframe(tipos)
-        def ask_ai_about_data(df, user_question, api_key):
-        client = Groq(api_key=api_key)
-    
-        # Resumen compacto del dataset
-        data_context = f"""
-        Dataset cargado:
-        - Filas: {df.shape[0]}
-        - Columnas: {df.shape[1]}
-        - Columnas: {list(df.columns)}
-    
-        Estadísticas principales:
-        {df.describe(include="all").to_string()}
-        """
-    
-        prompt = f"""
-        Eres un analista de datos senior.
-        Analiza el dataset y responde con lenguaje claro,
-        insights accionables y conclusiones útiles.
-    
-        CONTEXTO:
-        {data_context}
-    
-        PREGUNTA DEL USUARIO:
-        {user_question}
-        """
-    
-        completion = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=[
-                {
-                    "role": "system",
-                    "content": "Eres un experto en análisis exploratorio de datos."
-                },
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ],
-            temperature=0.3,
-            max_tokens=700
-        )
-    
-        return completion.choices[0].message.content
+st.dataframe(tipos)
+def ask_ai_about_data(df, user_question, api_key):
+    client = Groq(api_key=api_key)
+
+    # Resumen compacto del dataset
+    data_context = f"""
+    Dataset cargado:
+    - Filas: {df.shape[0]}
+    - Columnas: {df.shape[1]}
+    - Columnas: {list(df.columns)}
+
+    Estadísticas principales:
+    {df.describe(include="all").to_string()}
+    """
+
+    prompt = f"""
+    Eres un analista de datos senior.
+    Analiza el dataset y responde con lenguaje claro,
+    insights accionables y conclusiones útiles.
+
+    CONTEXTO:
+    {data_context}
+
+    PREGUNTA DEL USUARIO:
+    {user_question}
+    """
+
+    completion = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[
+            {
+                "role": "system",
+                "content": "Eres un experto en análisis exploratorio de datos."
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ],
+        temperature=0.3,
+        max_tokens=700
+    )
+
+    return completion.choices[0].message.content
 
