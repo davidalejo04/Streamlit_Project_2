@@ -120,8 +120,8 @@ st.subheader("🤖 Asistente inteligente de análisis")
 user_question = st.text_area(
             "Haz una pregunta sobre el dataset",
             placeholder=(
-                "Ej: ¿Qué ciudades presentan mayor contaminación?\n"
-                "Ej: ¿Observas anomalías en PM2.5?\n"
+                "Ej: ¿Qué municipios presentan mayor violencia hacia la mujer?\n"
+                "Ej: ¿Observas alguna relacion entre la edad y el tipo de asesinato?\n"
                 "Ej: Resume los hallazgos más importantes"
             )
         )
