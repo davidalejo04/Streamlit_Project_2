@@ -68,18 +68,18 @@ tipos = pd.DataFrame({
 "Valores nulos": results_df2.isnull().sum()
         })
 st.dataframe(tipos)
-def ask_ai_about_data((df, user_question, api_key):
+def ask_ai_about_data(df, user_question, api_key):
     client = Groq(api_key=api_key)
 
     # Resumen compacto del dataset
     data_context = f"""
     Dataset cargado:
-    - Filas: {(df.shape[0]}
-    - Columnas: {(df.shape[1]}
-    - Columnas: {list((df.columns)}
+    - Filas: {df.shape[0]}
+    - Columnas: {df.shape[1]}
+    - Columnas: {list(df.columns)}
 
     Estadísticas principales:
-    {(df.describe(include="all").to_string()}
+    {df.describe(include="all").to_string()}
     """
 
     prompt = f"""
@@ -111,14 +111,15 @@ def ask_ai_about_data((df, user_question, api_key):
     )
 
     return completion.choices[0].message.content
-# ==========================
-# ASISTENTE DE ANÁLISIS IA
-# ==========================
+    
+        # ==========================
+        # ASISTENTE DE ANÁLISIS IA
+        # ==========================
 st.subheader("🤖 Asistente inteligente de análisis")
 
-user_question = st.text_area(
-"Haz una pregunta sobre el dataset",
-placeholder=(
+        user_question = st.text_area(
+            "Haz una pregunta sobre el dataset",
+            placeholder=(
                 "Ej: ¿Qué ciudades presentan mayor contaminación?\n"
                 "Ej: ¿Observas anomalías en PM2.5?\n"
                 "Ej: Resume los hallazgos más importantes"
