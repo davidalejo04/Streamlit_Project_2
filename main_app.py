@@ -7,6 +7,11 @@ import geopandas as gpd
 import folium as fm
 from groq import Groq
 from sodapy import Socrata
+# Importamos los objetos geométricos más comunes de Shapely
+from shapely.geometry import Point, LineString, Polygon, MultiPolygon
+# Importamos PyProj para manejar proyecciones
+import pyproj
+from pyproj import Transformer, CRS
 
 # Unauthenticated client only works with public data sets. Note 'None'
 # in place of application token, and no username or password:
