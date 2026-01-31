@@ -117,7 +117,7 @@ def ask_ai_about_data(df, user_question, api_key):
         # ==========================
 st.subheader("🤖 Asistente inteligente de análisis")
 
-        user_question = st.text_area(
+user_question = st.text_area(
             "Haz una pregunta sobre el dataset",
             placeholder=(
                 "Ej: ¿Qué ciudades presentan mayor contaminación?\n"
@@ -126,7 +126,7 @@ st.subheader("🤖 Asistente inteligente de análisis")
             )
         )
 
-        if st.button("🔍 Analizar con IA"):
+if st.button("🔍 Analizar con IA"):
             if not groq_api_key:
                 st.warning("⚠️ Ingresa tu Groq API Key en la barra lateral")
             elif not user_question.strip():
