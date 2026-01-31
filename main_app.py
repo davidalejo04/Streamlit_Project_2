@@ -81,6 +81,8 @@ ax.legend()
 
 # Mostrar en Streamlit
 st.pyplot(fig)
+
+
 def ask_ai_about_data(df, user_question, api_key):
     client = Groq(api_key=api_key)
 
