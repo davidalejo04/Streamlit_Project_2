@@ -111,4 +111,35 @@ def ask_ai_about_data((results_df2, user_question, api_key):
     )
 
     return completion.choices[0].message.content
+# ==========================
+# ASISTENTE DE ANÁLISIS IA
+# ==========================
+st.subheader("🤖 Asistente inteligente de análisis")
 
+user_question = st.text_area(
+"Haz una pregunta sobre el dataset",
+placeholder=(
+                "Ej: ¿Qué ciudades presentan mayor contaminación?\n"
+                "Ej: ¿Observas anomalías en PM2.5?\n"
+                "Ej: Resume los hallazgos más importantes"
+            )
+        )
+
+        if st.button("🔍 Analizar con IA"):
+            if not groq_api_key:
+                st.warning("⚠️ Ingresa tu Groq API Key en la barra lateral")
+            elif not user_question.strip():
+                st.warning("⚠️ Escribe una pregunta")
+            else:
+                with st.spinner("Analizando los datos con IA..."):
+                    try:
+                        response = ask_ai_about_data(
+                            df=df,
+                            user_question=user_question,
+                            api_key=groq_api_key
+                        )
+                        st.markdown("### 📌 Respuesta del asistente")
+                        st.markdown(response)
+                    except Exception as e:
+                        st.error("❌ Error al consultar la IA")
+                        st.exception(e)
