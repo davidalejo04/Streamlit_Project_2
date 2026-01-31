@@ -9,4 +9,4 @@ streamlit-folium
 groq
 shapely
 pyproj
-socrata
+sodapy
