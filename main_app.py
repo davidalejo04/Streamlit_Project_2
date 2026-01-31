@@ -68,18 +68,18 @@ tipos = pd.DataFrame({
 "Valores nulos": results_df2.isnull().sum()
         })
 st.dataframe(tipos)
-def ask_ai_about_data(df, user_question, api_key):
+def ask_ai_about_data((results_df2, user_question, api_key):
     client = Groq(api_key=api_key)
 
     # Resumen compacto del dataset
     data_context = f"""
     Dataset cargado:
-    - Filas: {df.shape[0]}
-    - Columnas: {df.shape[1]}
-    - Columnas: {list(df.columns)}
+    - Filas: {(results_df2.shape[0]}
+    - Columnas: {(results_df2.shape[1]}
+    - Columnas: {list((results_df2.columns)}
 
     Estadísticas principales:
-    {df.describe(include="all").to_string()}
+    {(results_df2.describe(include="all").to_string()}
     """
 
     prompt = f"""
