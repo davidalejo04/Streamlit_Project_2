@@ -20,6 +20,17 @@ st.set_page_config(
     layout="wide"
 )
 
+# ==============================
+# ASISTENTE IA - CONFIG
+# ==============================
+st.sidebar.header("🤖 Asistente de análisis (IA)")
+
+groq_api_key = st.sidebar.text_input(
+    "Ingresa tu Groq API Key",
+    type="password",
+    help="La API Key no se guarda"
+)
+
 st.title("📊 Análisis Exploratorio de Datos (EDA)")
 
 # Unauthenticated client only works with public data sets. Note 'None'
@@ -57,3 +68,47 @@ results_df2=pd.DataFrame(results_df2)
             "Valores nulos": results_df2.isnull().sum()
         })
         st.dataframe(tipos)
+        def ask_ai_about_data(df, user_question, api_key):
+        client = Groq(api_key=api_key)
+    
+        # Resumen compacto del dataset
+        data_context = f"""
+        Dataset cargado:
+        - Filas: {df.shape[0]}
+        - Columnas: {df.shape[1]}
+        - Columnas: {list(df.columns)}
+    
+        Estadísticas principales:
+        {df.describe(include="all").to_string()}
+        """
+    
+        prompt = f"""
+        Eres un analista de datos senior.
+        Analiza el dataset y responde con lenguaje claro,
+        insights accionables y conclusiones útiles.
+    
+        CONTEXTO:
+        {data_context}
+    
+        PREGUNTA DEL USUARIO:
+        {user_question}
+        """
+    
+        completion = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "Eres un experto en análisis exploratorio de datos."
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            temperature=0.3,
+            max_tokens=700
+        )
+    
+        return completion.choices[0].message.content
+
