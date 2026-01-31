@@ -83,18 +83,18 @@ ax.legend()
 st.pyplot(fig)
 
 
-def ask_ai_about_data(df, user_question, api_key):
+def ask_ai_about_data(results_df2, user_question, api_key):
     client = Groq(api_key=api_key)
 
     # Resumen compacto del dataset
     data_context = f"""
     Dataset cargado:
-    - Filas: {df.shape[0]}
-    - Columnas: {df.shape[1]}
-    - Columnas: {list(df.columns)}
+    - Filas: {results_df2.shape[0]}
+    - Columnas: {results_df2.shape[1]}
+    - Columnas: {list(results_df2.columns)}
 
     Estadísticas principales:
-    {df.describe(include="all").to_string()}
+    {results_df2.describe(include="all").to_string()}
     """
 
     prompt = f"""
@@ -150,7 +150,7 @@ if st.button("🔍 Analizar con IA"):
                 with st.spinner("Analizando los datos con IA..."):
                     try:
                         response = ask_ai_about_data(
-                            df=df,
+                            results_df2=results_df2,
                             user_question=user_question,
                             api_key=groq_api_key
                         )
