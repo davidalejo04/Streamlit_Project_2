@@ -1,8 +1,11 @@
-folium
-geopandas
-matplotlib
-numpy
+streamlit
 pandas
+numpy
+matplotlib
 seaborn
+geopandas
+folium
+streamlit-folium
+groq
 Shapely
 PyProj
